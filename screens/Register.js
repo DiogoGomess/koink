@@ -17,7 +17,7 @@ const Register = ({ navigation }) => {
 
     async function handleSubmit() {
         try {
-            const response = await axios.post('https://koink-api.onrender.com/users', {
+            const response = await axios.post('https://koinkapi.onrender.com/users', {
                 username: username,
                 email: email,
                 password: password

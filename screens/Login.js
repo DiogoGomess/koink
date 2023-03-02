@@ -18,7 +18,7 @@ const Login = ({ navigation, route }) => {
     async function handleSubmit() {
         try {
             setIsLoading(true)
-            const response = await axios.post('https://koink-api.onrender.com/users/login', {
+            const response = await axios.post('https://koinkapi.onrender.com/users/login', {
                 username: username,
                 password: password
             });

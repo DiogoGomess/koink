@@ -65,7 +65,7 @@ const Perfil = ({ navigation, route }) => {
         let token = await AsyncStorage.getItem('token');
 
 
-        await axios.put(`https://koink-api.onrender.com/users/${loggedUser._id}`, {
+        await axios.put(`https://koinkapi.onrender.com/users/${loggedUser._id}`, {
             username: username,
             email: email,
         }, {
@@ -112,7 +112,7 @@ const Perfil = ({ navigation, route }) => {
     }
 
     async function renderModal(id) {
-        const avatar = await axios.get(`https://koink-api.onrender.com/avatars/${id}`);
+        const avatar = await axios.get(`https://koinkapi.onrender.com/avatars/${id}`);
 
         setActiveAvatar(avatar.data[0]);
 
@@ -121,7 +121,7 @@ const Perfil = ({ navigation, route }) => {
 
     async function setAvatar(image) {
         let token = await AsyncStorage.getItem('token');
-        await axios.put(`https://koink-api.onrender.com/users/${loggedUser._id}`, {
+        await axios.put(`https://koinkapi.onrender.com/users/${loggedUser._id}`, {
             curr_avatar: image
         }, {
             headers: {

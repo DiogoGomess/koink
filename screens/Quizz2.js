@@ -31,14 +31,14 @@ export default function Quizz2({ navigation }) {
     const { loggedUser, setLoggedUser } = useContext(LoggedUserContext);
 
     async function getQuestions() {
-        const response = await axios.get('https://koink-api.onrender.com/quizzes/63c9b24ff4fae54f17485920');
+        const response = await axios.get('https://koinkapi.onrender.com/quizzes/63c9b24ff4fae54f17485920');
         if (response.status == 200) {
             setallQuestions(response.data.quizz.questions)
         }
     }
 
     async function getLevels() {
-        const response = await axios.get('https://koink-api.onrender.com/levels');
+        const response = await axios.get('https://koinkapi.onrender.com/levels');
         if (response.status == 200) {
             setLevels(response.data.levels)
         }
@@ -65,7 +65,7 @@ export default function Quizz2({ navigation }) {
                         }
                     }
                 })
-                await axios.put(`https://koink-api.onrender.com/users/${loggedUser._id}`, {
+                await axios.put(`https://koinkapi.onrender.com/users/${loggedUser._id}`, {
                     coins: prevState.coins + coinsEarned,
                     level: {
                         number: new_level,
@@ -90,7 +90,7 @@ export default function Quizz2({ navigation }) {
                     }
                 })
         
-                await axios.put(`https://koink-api.onrender.com/users/${loggedUser._id}`, {
+                await axios.put(`https://koinkapi.onrender.com/users/${loggedUser._id}`, {
                     coins: prevState.coins + coinsEarned,
                     level: {
                         number: prevState.level.number,

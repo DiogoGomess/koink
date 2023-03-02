@@ -15,7 +15,7 @@ const Main = ({ navigation }) => {
     const [levels, setLevels] = useState(null);
     const [percentage, setPercentage] = useState(0);
     async function getLevels() {
-        const response = await axios.get('https://koink-api.onrender.com/levels');
+        const response = await axios.get('https://koinkapi.onrender.com/levels');
         if (response.status == 200) {
             setLevels(response.data.levels)
         }

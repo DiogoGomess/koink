@@ -37,7 +37,7 @@ export default function Store({ navigation }) {
     }
 
     async function getAvatars() {
-        const response = await axios.get('https://koink-api.onrender.com/avatars');
+        const response = await axios.get('https://koinkapi.onrender.com/avatars');
         if (response.status == 200) {
             setAvatars(response.data.avatars)
             console.log(response.data.avatars);
@@ -45,7 +45,7 @@ export default function Store({ navigation }) {
     }
 
     async function getBoosters() {
-        const response = await axios.get('https://koink-api.onrender.com/boosters');
+        const response = await axios.get('https://koinkapi.onrender.com/boosters');
         if (response.status == 200) {
             setBoosters(response.data.boosters)
             //console.log(response.data.avatars);
@@ -54,7 +54,7 @@ export default function Store({ navigation }) {
 
 
     async function renderModalAvatar(id) {
-        const avatar = await axios.get(`https://koink-api.onrender.com/avatars/${id}`);
+        const avatar = await axios.get(`https://koinkapi.onrender.com/avatars/${id}`);
         //console.log(avatar.data);
         setActiveAvatar(avatar.data[0]);
 
@@ -62,7 +62,7 @@ export default function Store({ navigation }) {
     }
 
     async function renderModalBooster(id) {
-        const booster = await axios.get(`https://koink-api.onrender.com/boosters/${id}`);
+        const booster = await axios.get(`https://koinkapi.onrender.com/boosters/${id}`);
         console.log(booster);
         setActiveBooster(booster.data[0]);
 
@@ -71,13 +71,13 @@ export default function Store({ navigation }) {
 
     async function buyAvatar(avatar) {
         let token = await AsyncStorage.getItem('token');
-        await axios.put(`https://koink-api.onrender.com/users/${loggedUser._id}/avatars/${avatar._id}`, {}, {
+        await axios.put(`https://koinkapi.onrender.com/users/${loggedUser._id}/avatars/${avatar._id}`, {}, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + token
             }
         });
-        await axios.put(`https://koink-api.onrender.com/users/${loggedUser._id}`, {
+        await axios.put(`https://koinkapi.onrender.com/users/${loggedUser._id}`, {
             coins: loggedUser.coins - avatar.price
         }, {
             headers: {
@@ -100,13 +100,13 @@ export default function Store({ navigation }) {
 
     async function buyBooster(booster) {
         let token = await AsyncStorage.getItem('token');
-        await axios.put(`https://koink-api.onrender.com/users/${loggedUser._id}/boosters/${booster._id}`, {}, {
+        await axios.put(`https://koinkapi.onrender.com/users/${loggedUser._id}/boosters/${booster._id}`, {}, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + token
             }
         });
-        await axios.put(`https://koink-api.onrender.com/users/${loggedUser._id}`, {
+        await axios.put(`https://koinkapi.onrender.com/users/${loggedUser._id}`, {
             coins: loggedUser.coins - booster.price
         }, {
             headers: {
