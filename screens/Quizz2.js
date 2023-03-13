@@ -252,11 +252,11 @@ export default function Quizz2({ navigation }) {
                                 <View style={styles.containerIcons}>
                                     <View style={{ alignItems: 'center' }}>
                                         <IconAntDesign name="closesquareo" size={80} color="#ff6600" style={styles.icon} onPress={() => setModalPause(false)}></IconAntDesign>
-                                        <Text>Voltar</Text>
+                                        <Text style={{ color: '#353535'}}>Voltar</Text>
                                     </View>
                                     <View style={{ alignItems: 'center' }}>
                                         <IconMaterial name="exit-to-app" size={80} color="#ff6600" style={styles.icon} onPress={() => navigation.navigate('Minijogos')}></IconMaterial>
-                                        <Text>Sair do Jogo</Text>
+                                        <Text style={{ color: '#353535'}}>Sair do Jogo</Text>
                                     </View>
                                 </View>
                             </View>

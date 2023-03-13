@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { ImageBackground, Text, Modal, ScrollView, View, StyleSheet, Image, Pressable, Button, TouchableNativeFeedback, TextInput, Dimensions } from 'react-native';
+import { ImageBackground, Text, Modal, ScrollView, View, ActivityIndicator, StyleSheet, Image, Pressable, Button, TouchableNativeFeedback, TextInput, Dimensions } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,6 +10,7 @@ import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import { BlurView } from 'expo-blur';
 import { LoggedUserContext } from '../src/LoggedUserContext';
+import { RenderAvatar } from '../components/RenderAvatar';
 
 const ListTab = [
     {
@@ -29,7 +30,10 @@ export default function Store({ navigation }) {
     const [boosters, setBoosters] = useState(null);
     const [activeAvatar, setActiveAvatar] = useState(null);
     const [activeBooster, setActiveBooster] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const { loggedUser, setLoggedUser } = useContext(LoggedUserContext);
+    const [userAvatars, setUserAvatars] = useState(null);
+
 
 
     const setTipoFilter = tipo => {
@@ -40,9 +44,10 @@ export default function Store({ navigation }) {
         const response = await axios.get('https://koinkapi.onrender.com/avatars');
         if (response.status == 200) {
             setAvatars(response.data.avatars)
-            console.log(response.data.avatars);
+            setUserAvatars(loggedUser?.inventory?.avatars)
         }
     }
+
 
     async function getBoosters() {
         const response = await axios.get('https://koinkapi.onrender.com/boosters');
@@ -63,7 +68,7 @@ export default function Store({ navigation }) {
 
     async function renderModalBooster(id) {
         const booster = await axios.get(`https://koinkapi.onrender.com/boosters/${id}`);
-        console.log(booster);
+        // console.log(booster);
         setActiveBooster(booster.data[0]);
 
         setModalBooster(true);
@@ -71,6 +76,7 @@ export default function Store({ navigation }) {
 
     async function buyAvatar(avatar) {
         let token = await AsyncStorage.getItem('token');
+        setIsLoading(true)
         await axios.put(`https://koinkapi.onrender.com/users/${loggedUser._id}/avatars/${avatar._id}`, {}, {
             headers: {
                 'Accept': 'application/json',
@@ -92,6 +98,7 @@ export default function Store({ navigation }) {
                 coins: loggedUser.coins - avatar.price
             }
         })
+        setIsLoading(false)
         setModalAvatar(false);
         //setModalBooster(false);
         setModalComplete(true)
@@ -127,6 +134,24 @@ export default function Store({ navigation }) {
 
     }
 
+    const displayContent = () => {
+        if (isLoading) {
+            return <ActivityIndicator size="large" />
+        }
+        else {
+            return (
+                <View>
+                    <Pressable style={styles.botaoCompraFinal} onPress={() => buyAvatar(activeAvatar)}>
+                        <Text style={styles.botaoCompraFinalTxt}>Comprar</Text>
+                    </Pressable>
+                    <Pressable style={styles.botaoCancelar} onPress={() => setModalAvatar(false)}>
+                        <Text style={styles.botaoCancelarTxt}>Cancelar</Text>
+                    </Pressable>
+                </View>
+            )
+        }
+    }
+
     useEffect(() => {
         getAvatars();
         getBoosters();
@@ -134,7 +159,7 @@ export default function Store({ navigation }) {
 
     return (
         <SafeAreaView>
-            {loggedUser && avatars &&
+            {loggedUser && avatars && userAvatars &&
                 <SafeAreaView style={[styles.container, modalAvatar === true || modalBooster === true && styles.containerBlur]}>
                     <LinearGradient
                         colors={['#0075FF', '#0E41A6', '#430B89']}
@@ -161,18 +186,20 @@ export default function Store({ navigation }) {
                         {tipo == 'Avatares' &&
                             <View style={{ marginBottom: 50 }}>
                                 <View style={styles.avatares}>
+
                                     {
-                                        avatars.map((avatar) => {
-                                            return (
-                                                <View key={avatar._id} style={styles.avatarInfo}>
-                                                    <View style={styles.avataresImage}>
-                                                        <SvgUri width='80' height='80' uri={avatar.image} />
-                                                    </View>
-                                                    <View style={styles.avatarPreco}>
-                                                        <Text style={styles.avatarPrecoTxt}>{avatar.price}</Text>
-                                                        <SvgUri style={{ marginRight: 10 }} width='21' height='21' uri="https://rapedolo.sirv.com/koink/coin.svg" />
-                                                    </View>
-                                                    {loggedUser.level.number >= avatar.unlockedAt && loggedUser.coins >= avatar.price ?
+                                        avatars.map((avatar) => (
+                                            !loggedUser.inventory.avatars.some(owned__avatar => owned__avatar._id == avatar._id) &&
+                                            <View key={avatar._id} style={styles.avatarInfo}>
+                                                <View style={styles.avataresImage}>
+                                                    <SvgUri width='80' height='80' uri={avatar.image} />
+                                                </View>
+                                                <View style={styles.avatarPreco}>
+                                                    <Text style={styles.avatarPrecoTxt}>{avatar.price}</Text>
+                                                    <SvgUri style={{ marginRight: 10 }} width='21' height='21' uri="https://rapedolo.sirv.com/koink/coin.svg" />
+                                                </View>
+                                                {
+                                                    loggedUser.level.number >= avatar.unlockedAt && loggedUser.coins >= avatar.price ?
                                                         <Pressable style={styles.botaoComprar} onPress={() => renderModalAvatar(avatar._id)}>
                                                             <Text style={styles.botaoComprarTxt}>Comprar</Text>
                                                         </Pressable>
@@ -180,10 +207,10 @@ export default function Store({ navigation }) {
                                                         <Pressable style={styles.botaoBloqueado}>
                                                             <Text style={styles.botaoBloqueado.text}>Bloqueado</Text>
                                                         </Pressable>
-                                                    }
-                                                </View>
-                                            )
-                                        })
+                                                }
+
+                                            </View>
+                                        ))
                                     }
                                 </View>
                             </View>
@@ -220,67 +247,12 @@ export default function Store({ navigation }) {
                                     }
                                 </View>
                             </View>
-                            // <View style={{ marginBottom: 50 }}>
-                            //     <View style={styles.avatares}>
-                            //         <View style={styles.avatarInfo}>
-                            //             <View style={styles.avataresImage}>
-                            //                 <SvgUri width="800" height="800" uri="https://sonaligl.sirv.com/Images/boostCoins.svg" />
-                            //             </View>
-                            //             <View style={styles.avatarPreco}>
-                            //                 <Text style={styles.avatarPrecoTxt}>2.500</Text>
-                            //                 <SvgUri style={{ marginRight: 10 }} width='21' height='21' uri="https://rapedolo.sirv.com/koink/coin.svg" />
-                            //             </View>
-                            //             <Pressable style={styles.botaoComprar}>
-                            //                 <Text style={styles.botaoComprarTxt}>Comprar</Text>
-                            //             </Pressable>
-                            //         </View>
-                            //         <View style={styles.avatarInfo}>
-                            //             <View style={styles.avataresImage}>
-                            //                 <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                            //             </View>
-                            //             <View style={styles.avatarPreco}>
-                            //                 <Text style={styles.avatarPrecoTxt}>2.500</Text>
-                            //                 <SvgUri style={{ marginRight: 10 }} width='21' height='21' uri="https://rapedolo.sirv.com/koink/coin.svg" />
-                            //             </View>
-                            //             <Pressable style={styles.botaoComprar}>
-                            //                 <Text style={styles.botaoComprarTxt}>Comprar</Text>
-                            //             </Pressable>
-                            //         </View>
 
-                            //     </View>
-                            //     <View style={styles.avatares}>
-                            //         <View style={styles.avatarInfo}>
-                            //             <View style={styles.avataresImage}>
-                            //                 <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                            //             </View>
-                            //             <View style={styles.avatarPreco}>
-                            //                 <Text style={styles.avatarPrecoTxt}>2.500</Text>
-                            //                 <SvgUri style={{ marginRight: 10 }} width='21' height='21' uri="https://rapedolo.sirv.com/koink/coin.svg" />
-                            //             </View>
-                            //             <Pressable style={styles.botaoComprar}>
-                            //                 <Text style={styles.botaoComprarTxt}>Comprar</Text>
-                            //             </Pressable>
-                            //         </View>
-                            //         <View style={styles.avatarInfo}>
-                            //             <View style={styles.avataresImage}>
-                            //                 <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                            //             </View>
-                            //             <View style={styles.avatarPreco}>
-                            //                 <Text style={styles.avatarPrecoTxt}>2.500</Text>
-                            //                 <SvgUri style={{ marginRight: 10 }} width='21' height='21' uri="https://rapedolo.sirv.com/koink/coin.svg" />
-                            //             </View>
-                            //             <Pressable style={styles.botaoComprar}>
-                            //                 <Text style={styles.botaoComprarTxt}>Comprar</Text>
-                            //             </Pressable>
-                            //         </View>
-
-                            //     </View>
-                            // </View>
                         }
                     </ScrollView>
 
 
-                    {activeAvatar && 
+                    {activeAvatar &&
                         <Modal
                             animationType="slide"
                             visible={modalAvatar}
@@ -301,19 +273,14 @@ export default function Store({ navigation }) {
                                             <Text style={styles.avatarCompraPrecoTxt}>{activeAvatar.price}</Text>
                                             <SvgUri style={{ marginRight: 10 }} width='21' height='21' uri="https://rapedolo.sirv.com/koink/coin.svg" />
                                         </View>
-                                        <Pressable style={styles.botaoCompraFinal} onPress={() => buyAvatar(activeAvatar)}>
-                                            <Text style={styles.botaoCompraFinalTxt}>Comprar</Text>
-                                        </Pressable>
-                                        <Pressable style={styles.botaoCancelar} onPress={() => setModalAvatar(false)}>
-                                            <Text style={styles.botaoCancelarTxt}>Cancelar</Text>
-                                        </Pressable>
+                                        {displayContent()}
                                     </View>
                                 </View>
                             </BlurView>
                         </Modal>
                     }
 
-                    {activeBooster && 
+                    {activeBooster &&
                         <Modal
                             animationType="slide"
                             visible={modalBooster}
@@ -344,7 +311,7 @@ export default function Store({ navigation }) {
                                 </View>
                             </BlurView>
                         </Modal>
-                    }   
+                    }
 
                     {/* Modal sucesso de compra */}
                     <Modal
@@ -513,7 +480,7 @@ const styles = StyleSheet.create({
     },
     botaoComprarTxt: {
         color: '#ffffff',
-        fontSize: 18
+        fontSize: 18,
     },
 
     botaoBloqueado: {

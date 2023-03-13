@@ -19,7 +19,7 @@ const Login = ({ navigation, route }) => {
         try {
             setIsLoading(true)
             const response = await axios.post('https://koinkapi.onrender.com/users/login', {
-                username: username,
+                username: username.toLowerCase(),
                 password: password
             });
             console.log(response);
@@ -58,6 +58,10 @@ const Login = ({ navigation, route }) => {
         }
     }
 
+    const handleUsernameChange = (text) => {
+        setUsername(text.trim());
+      };
+
     return (
         <SafeAreaView style={styles.container}>
             {/* <SvgUri style={styles.background} uri="https://sonaligl.sirv.com/Images/Group%2047.svg" /> */}
@@ -69,7 +73,7 @@ const Login = ({ navigation, route }) => {
             <View style={styles.inputs}>
                 <TextInput
                     style={styles.inputs.name}
-                    onChangeText={setUsername}
+                    onChangeText={handleUsernameChange}
                     value={username}
                     placeholder='Nome de Utilizador'
                     placeholderTextColor="black"

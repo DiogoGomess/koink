@@ -450,14 +450,14 @@ const Perfil = ({ navigation, route }) => {
                         }}
                     >
                         <BlurView intensity={100} tint='dark' style={styles.containerModal}>
-                            <View style={[styles.modal]}>
+                            <View style={[styles.modal, { height: '50%', }]}>
                                 <View style={{ marginVertical: 20 }}>
                                     <SvgUri width='150' height='150' uri='https://rapedolo.sirv.com/koink/koinkTriste.svg' />
                                 </View>
                                 <Text style={styles.modalAvatarTxt}>A tua sessão foi terminada com sucesso!</Text>
                                 <TouchableNativeFeedback onPress={() => navigation.navigate('Home')}>
-                                    <View style={[styles.buttonAvatarModal]}>
-                                        <Text style={[styles.buttonAvatarModalTxt, { color: '#FFFFFF' }]}>Ok</Text>
+                                    <View style={[styles.buttonAvatarModal, {marginTop:20}]}>
+                                        <Text style={[styles.buttonAvatarModalTxt, { color: '#FFFFFF'}]}>Ok</Text>
                                     </View>
                                 </TouchableNativeFeedback>
                             </View>

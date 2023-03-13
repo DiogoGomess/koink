@@ -25,8 +25,8 @@ export default function SelectQuizz({ navigation }) {
                 <Icon name="chevron-back" size={30} color="#fff" style={styles.icon} onPress={() => navigation.navigate('Minijogos')}></Icon>
             </View>
             <View style={styles.nuvemContainer}>
-                <SvgUri width='170' height='170' uri="https://rapedolo.sirv.com/koink/nuvem.svg" />
-                <SvgUri style={styles.koinkDinheiro} width='80' height='80' uri="https://rapedolo.sirv.com/koink/koinkDinheiro.svg" />
+                <SvgUri width='120' height='120' uri="https://rapedolo.sirv.com/koink/nuvem.svg" />
+                <SvgUri style={styles.koinkDinheiro} width='40' height='40' uri="https://rapedolo.sirv.com/koink/koinkDinheiro.svg" />
 
             </View>
             <View style={styles.imageQuizzes}>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     containerButtons: {
         width: '100%',
         alignItems: 'center',
-        marginTop:70,
+        marginTop:60,
     },
 
     button: {

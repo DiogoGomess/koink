@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImageBackground, Text, Modal, ScrollView, View, StyleSheet, Image, Pressable, Button, TouchableNativeFeedback, TextInput } from 'react-native';
+import { ImageBackground, Text, Modal, ScrollView, ActivityIndicator, View, StyleSheet, Image, Pressable, Button, TouchableNativeFeedback, TextInput } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
@@ -14,23 +14,50 @@ const Register = ({ navigation }) => {
     const [modalError, setModalError] = useState(false)
     const [error, setError] = useState(null)
     const [sucess, setSucess] = useState(null)
+    const [isLoading, setIsLoading] = useState(false);
 
     async function handleSubmit() {
         try {
+            setIsLoading(true)
             const response = await axios.post('https://koinkapi.onrender.com/users', {
-                username: username,
-                email: email,
+                username: username.toLowerCase(),
+                email: email.toLowerCase(),
                 password: password
             });
             //console.log(response);
+            setIsLoading(false)
             if (response.status == 201)
-               setSucess(true);
+                setSucess(true);
         } catch (error) {
             setError(error.response.data.msg)
-            // setIsLoading(false)
+            setIsLoading(false)
             setModalError(true)
         }
     }
+
+
+    const displayContent = () => {
+        if (isLoading) {
+            return <ActivityIndicator size="large" />
+        }
+        else {
+            return (
+                <View style={styles.account}>
+                    <Pressable onPress={() => handleSubmit()} style={styles.account.buttonRegistar}>
+                        <Text style={styles.account.buttonRegistar.text}>Registar</Text>
+                    </Pressable>
+                    <Text style={styles.account.text}>Já tens uma conta?</Text>
+                    <Pressable onPress={() => navigation.navigate('Login')} style={styles.account.buttonLogin}>
+                        <Text style={styles.account.buttonLogin.text}>Login</Text>
+                    </Pressable>
+                </View>
+            )
+        }
+    }
+
+    const handleUsernameChange = (text) => {
+        setUsername(text.trim());
+      };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -43,7 +70,7 @@ const Register = ({ navigation }) => {
             <View style={styles.inputs}>
                 <TextInput
                     style={styles.inputs.name}
-                    onChangeText={setUsername}
+                    onChangeText={handleUsernameChange}
                     value={username}
                     placeholder='Nome de Utilizador'
                     placeholderTextColor="black"
@@ -64,15 +91,8 @@ const Register = ({ navigation }) => {
                     placeholderTextColor="black"
                 />
             </View>
-            <View style={styles.account}>
-                <Pressable onPress={() => handleSubmit()} style={styles.account.buttonRegistar}>
-                    <Text style={styles.account.buttonRegistar.text}>Registar</Text>
-                </Pressable>
-                <Text style={styles.account.text}>Já tens uma conta?</Text>
-                <Pressable onPress={() => navigation.navigate('Login')} style={styles.account.buttonLogin}>
-                    <Text style={styles.account.buttonLogin.text}>Login</Text>
-                </Pressable>
-            </View>
+            {displayContent()}
+
 
             <Modal
                 animationType="slide"
@@ -115,7 +135,7 @@ const Register = ({ navigation }) => {
                             <SvgUri width='150' height='150' uri='https://rapedolo.sirv.com/koink/koinkVitoria.svg' />
                         </View>
                         <Text style={styles.modalAvatarTxt}>Registado com sucesso!</Text>
-                        <TouchableNativeFeedback onPress={() =>  navigation.navigate('Login')}>
+                        <TouchableNativeFeedback onPress={() => navigation.navigate('Login')}>
                             <View style={[styles.buttonAvatarModal]}>
                                 <Text style={[styles.buttonAvatarModalTxt, { color: '#FFFFFF' }]}>Continuar</Text>
                             </View>

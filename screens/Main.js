@@ -48,10 +48,10 @@ const Main = ({ navigation }) => {
                     </View>
                     <View style={styles.navbar}>
                         <View style={styles.vidas}>
-                            <Icon name="heart" size={40} color="#ACACAC" style={[styles.icon, styles.vidaActive]}></Icon>
-                            <Icon name="heart" size={40} color="#ACACAC" style={[styles.icon, styles.vidaActive]}></Icon>
-                            <Icon name="heart" size={40} color="#ACACAC" style={[styles.icon, styles.vidaActive]}></Icon>
-                            <Icon name="heart" size={40} color="#ACACAC" style={[styles.icon]}></Icon>
+                            <Icon name="heart" size={35} color="#ACACAC" style={[styles.icon, styles.vidaActive]}></Icon>
+                            <Icon name="heart" size={35} color="#ACACAC" style={[styles.icon, styles.vidaActive]}></Icon>
+                            <Icon name="heart" size={35} color="#ACACAC" style={[styles.icon, styles.vidaActive]}></Icon>
+                            <Icon name="heart" size={35} color="#f6f4f2" style={[styles.icon]}></Icon>
                         </View>
                         <View style={styles.containerMoedas}>
                             <Text style={styles.numMoedas}>{loggedUser.coins}</Text>
@@ -205,6 +205,7 @@ const styles = StyleSheet.create({
         paddingRight: 70,
         marginTop: 40,
         marginLeft: 30,
+        alignItems: 'center',
     },
 
     containerMoedas: {

@@ -13,11 +13,11 @@ import { BlurView } from 'expo-blur';
 import {LoggedUserContext} from '../src/LoggedUserContext';
 
 
-
 export default function Quizz1({ navigation }) {
 
     const [allQuestions, setallQuestions] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    let contador = 0;
     const [currentOptionSelected, setCurrentOptionSelected] = useState(null);
     const [correctOption, setCorrectOption] = useState(null);
     const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
@@ -49,7 +49,6 @@ export default function Quizz1({ navigation }) {
         let token = await AsyncStorage.getItem('token');
         let userLevel = levels.find(level => level.number == loggedUser.level.number);
         setLoggedUser(async (prevState) => {
-
             let new_experience = loggedUser.level.experience + xpEarned
             let new_coins = loggedUser.coins + coinsEarned;
             if (new_experience >= userLevel.xpToNext) {
@@ -123,7 +122,7 @@ export default function Quizz1({ navigation }) {
     }
 
     async function handleNext() {
-        if (currentQuestionIndex == allQuestions.length - 1) {
+        if (currentQuestionIndex == 2) {
             // Last Question
             // Show Score Modal
             setShowNextButton(false);
@@ -132,6 +131,7 @@ export default function Quizz1({ navigation }) {
             //await updateRewards();
         } else {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
+            contador = contador +1
             setCurrentOptionSelected(null);
             setCorrectOption(null);
             setIsOptionsDisabled(false);
@@ -172,7 +172,7 @@ export default function Quizz1({ navigation }) {
                         </View>
                     </View>
                     <View style={styles.numPerguntasContainer}>
-                        <Text style={styles.numPerguntasTxt}>{currentQuestionIndex + 1}/4</Text>
+                        <Text style={styles.numPerguntasTxt}>{contador + 1}/4</Text>
                     </View>
                     <View style={styles.options}>
                         {
@@ -252,11 +252,11 @@ export default function Quizz1({ navigation }) {
                                 <View style={styles.containerIcons}>
                                     <View style={{ alignItems: 'center' }}>
                                         <IconAntDesign name="closesquareo" size={80} color="#ff6600" style={styles.icon} onPress={() => setModalPause(false)}></IconAntDesign>
-                                        <Text>Voltar</Text>
+                                        <Text style={{ color: '#353535'}}>Voltar</Text>
                                     </View>
                                     <View style={{ alignItems: 'center' }}>
                                         <IconMaterial name="exit-to-app" size={80} color="#ff6600" style={styles.icon} onPress={() => navigation.navigate('Minijogos')}></IconMaterial>
-                                        <Text>Sair do Jogo</Text>
+                                        <Text style={{ color: '#353535'}}>Sair do Jogo</Text>
                                     </View>
                                 </View>
                             </View>
