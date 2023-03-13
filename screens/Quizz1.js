@@ -17,7 +17,6 @@ export default function Quizz1({ navigation }) {
 
     const [allQuestions, setallQuestions] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    let contador = 0;
     const [currentOptionSelected, setCurrentOptionSelected] = useState(null);
     const [correctOption, setCorrectOption] = useState(null);
     const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
@@ -122,7 +121,7 @@ export default function Quizz1({ navigation }) {
     }
 
     async function handleNext() {
-        if (currentQuestionIndex == 2) {
+        if (currentQuestionIndex == allQuestions.length - 1) {
             // Last Question
             // Show Score Modal
             setShowNextButton(false);
@@ -131,7 +130,6 @@ export default function Quizz1({ navigation }) {
             //await updateRewards();
         } else {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
-            contador = contador +1
             setCurrentOptionSelected(null);
             setCorrectOption(null);
             setIsOptionsDisabled(false);
@@ -172,7 +170,7 @@ export default function Quizz1({ navigation }) {
                         </View>
                     </View>
                     <View style={styles.numPerguntasContainer}>
-                        <Text style={styles.numPerguntasTxt}>{contador + 1}/4</Text>
+                        <Text style={styles.numPerguntasTxt}>{currentQuestionIndex + 1}/4</Text>
                     </View>
                     <View style={styles.options}>
                         {
