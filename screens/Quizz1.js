@@ -10,7 +10,7 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import { BlurView } from 'expo-blur';
 // import { set } from 'vue/types/umd';
-import {LoggedUserContext} from '../src/LoggedUserContext';
+import { LoggedUserContext } from '../src/LoggedUserContext';
 
 
 export default function Quizz1({ navigation }) {
@@ -28,13 +28,29 @@ export default function Quizz1({ navigation }) {
     const [modalPause, setModalPause] = useState(false)
     const [levels, setLevels] = useState(null);
     const { loggedUser, setLoggedUser } = useContext(LoggedUserContext);
+    const [currentQuestion, setCurrentQuestion] = useState([]);
+    const [remainingQuestions, setRemainingQuestions] = useState([]);
+
 
     async function getQuestions() {
-        const response = await axios.get('https://koinkapi.onrender.com/quizzes/63b9b959730884c90ce6ee59');
+        const response = await axios.get('https://koinkapi.onrender.com/quizzes/6411fc9746bef7259c07aedd');
         if (response.status == 200) {
             setallQuestions(response.data.quizz.questions)
+            setRemainingQuestions(response.data.quizz.questions)
+
+            let id = Math.floor(Math.floor(Math.random() * response.data.quizz.questions.length))
+            setCurrentQuestion(response.data.quizz.questions[id])
+            // console.log("Loaded first question: " + id);
+            // console.log("Question: " + response.data.quizz.questions[id].question);
+
+            // setRemainingQuestions(prevQuestions => prevQuestions.filter(index => index !== id));
+            // console.log(remainingQuestions);
+
         }
+
     }
+
+
 
     async function getLevels() {
         const response = await axios.get('https://koinkapi.onrender.com/levels');
@@ -42,6 +58,8 @@ export default function Quizz1({ navigation }) {
             setLevels(response.data.levels)
         }
     }
+
+
 
 
     async function updateRewards() {
@@ -52,7 +70,7 @@ export default function Quizz1({ navigation }) {
             let new_coins = loggedUser.coins + coinsEarned;
             if (new_experience >= userLevel.xpToNext) {
                 console.log('subiu de nivel')
-                let new_level = prevState.level.number++;
+                let new_level = prevState.level.number + 1;
                 setLoggedUser((prevState) => {
                     return {
                         ...prevState,
@@ -87,7 +105,7 @@ export default function Quizz1({ navigation }) {
                         }
                     }
                 })
-        
+
                 await axios.put(`https://koinkapi.onrender.com/users/${loggedUser._id}`, {
                     coins: new_coins,
                     level: {
@@ -102,11 +120,12 @@ export default function Quizz1({ navigation }) {
                 });
             }
         })
-        
+
     }
 
     const validateAnswer = (selectedOption) => {
-        let correct_option = allQuestions[currentQuestionIndex]['correct'];
+        // let correct_option = allQuestions[currentQuestionIndex]['correct'];
+        let correct_option = currentQuestion['correct'];
         setCurrentOptionSelected(selectedOption);
         setCorrectOption(correct_option);
         setIsOptionsDisabled(true);
@@ -120,8 +139,9 @@ export default function Quizz1({ navigation }) {
         setShowNextButton(true)
     }
 
+
     async function handleNext() {
-        if (currentQuestionIndex == allQuestions.length - 1) {
+        if (currentQuestionIndex == 3) {
             // Last Question
             // Show Score Modal
             setShowNextButton(false);
@@ -129,7 +149,18 @@ export default function Quizz1({ navigation }) {
             setShowScoreModal(true);
             //await updateRewards();
         } else {
-            setCurrentQuestionIndex(currentQuestionIndex + 1);
+            // getQuestions()
+            for (let i = remainingQuestions.length - 1; i >= 0; i--) {
+                const index = remainingQuestions.findIndex(q => q._id === currentQuestion._id);
+                if (index > -1) {
+                    setCurrentQuestionIndex(currentQuestionIndex+1)
+                    remainingQuestions.splice(index, 1);
+                }
+            }
+            let id = Math.floor(Math.random() * remainingQuestions.length);
+            setCurrentQuestion(remainingQuestions[id]);
+            // console.log("length: " + RQ_CLONE.length);
+            // setCurrentQuestionIndex(0);
             setCurrentOptionSelected(null);
             setCorrectOption(null);
             setIsOptionsDisabled(false);
@@ -141,7 +172,8 @@ export default function Quizz1({ navigation }) {
     useEffect(() => {
         getQuestions();
         getLevels();
-    },[]);
+    }, []);
+
 
     useEffect(() => {
     }, [loggedUser]);
@@ -150,7 +182,7 @@ export default function Quizz1({ navigation }) {
 
     return (
         <SafeAreaView>
-            {loggedUser && allQuestions &&
+            {loggedUser && currentQuestion && allQuestions &&
                 <SafeAreaView style={styles.container}>
                     <LinearGradient
                         colors={['#0075FF', '#0E41A6', '#430B89']}
@@ -166,7 +198,8 @@ export default function Quizz1({ navigation }) {
                         <View style={[styles.containerPergunta, { transform: [{ rotate: '2deg' }] }]}></View>
                         <View style={[styles.containerPergunta, { transform: [{ rotate: '-2deg' }] }]}></View>
                         <View style={styles.containerPergunta}>
-                            <Text style={styles.perguntaTxt}>{allQuestions[currentQuestionIndex]?.question}</Text>
+                            <Text style={styles.perguntaTxt}>{currentQuestion?.question}</Text>
+                            {/* <Text style={styles.perguntaTxt}>{allQuestions[currentQuestionIndex]?.question}</Text>  */}
                         </View>
                     </View>
                     <View style={styles.numPerguntasContainer}>
@@ -174,7 +207,7 @@ export default function Quizz1({ navigation }) {
                     </View>
                     <View style={styles.options}>
                         {
-                            allQuestions[currentQuestionIndex]?.options.map(option => (
+                            currentQuestion.options && currentQuestion?.options.map(option => (
                                 <Pressable
                                     onPress={() => validateAnswer(option)}
                                     disabled={isOptionsDisabled}
@@ -223,10 +256,10 @@ export default function Quizz1({ navigation }) {
                             <View style={styles.modal}>
                                 <Text style={styles.modalTitulo}>Pontuação: {score}/{allQuestions.length}</Text>
                                 <Text style={styles.modalCoins}>Ganhaste <Text style={{ color: '#FF6600' }}>{coinsEarned}</Text> coins!</Text>
-                                <Pressable style={styles.modalJogar} onPress={() => {navigation.navigate('SelectQuizz'); updateRewards()}}>
+                                <Pressable style={styles.modalJogar} onPress={() => { navigation.navigate('SelectQuizz'); updateRewards() }}>
                                     <Text style={styles.modalJogar.text}>Continuar</Text>
                                 </Pressable>
-                                <Pressable style={styles.modalSair} onPress={() => {navigation.navigate('Main'); updateRewards()}}>
+                                <Pressable style={styles.modalSair} onPress={() => { navigation.navigate('Main'); updateRewards() }}>
                                     <Text style={styles.modalSair.text}>Sair do Jogo</Text>
                                 </Pressable>
                             </View>
@@ -250,11 +283,11 @@ export default function Quizz1({ navigation }) {
                                 <View style={styles.containerIcons}>
                                     <View style={{ alignItems: 'center' }}>
                                         <IconAntDesign name="closesquareo" size={80} color="#ff6600" style={styles.icon} onPress={() => setModalPause(false)}></IconAntDesign>
-                                        <Text style={{ color: '#353535'}}>Voltar</Text>
+                                        <Text style={{ color: '#353535' }}>Voltar</Text>
                                     </View>
                                     <View style={{ alignItems: 'center' }}>
                                         <IconMaterial name="exit-to-app" size={80} color="#ff6600" style={styles.icon} onPress={() => navigation.navigate('Minijogos')}></IconMaterial>
-                                        <Text style={{ color: '#353535'}}>Sair do Jogo</Text>
+                                        <Text style={{ color: '#353535' }}>Sair do Jogo</Text>
                                     </View>
                                 </View>
                             </View>
