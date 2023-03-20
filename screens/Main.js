@@ -5,15 +5,20 @@ import { ProgressBar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {LoggedUserContext} from '../src/LoggedUserContext';
+import { LoggedUserContext } from '../src/LoggedUserContext';
 import axios from 'axios';
 
 
 const Main = ({ navigation }) => {
 
-    const {loggedUser, setLoggedUser} = useContext(LoggedUserContext);
+    const { loggedUser, setLoggedUser } = useContext(LoggedUserContext);
     const [levels, setLevels] = useState(null);
     const [percentage, setPercentage] = useState(0);
+    const [lastRewardDate, setLastRewardDate] = useState(null);
+    const [isRewardClaimed, setIsRewardClaimed] = useState(true);
+    const [timeUntilNextClick, setTimeUntilNextClick] = useState(0);
+
+
     async function getLevels() {
         const response = await axios.get('https://koinkapi.onrender.com/levels');
         if (response.status == 200) {
@@ -24,10 +29,79 @@ const Main = ({ navigation }) => {
         getLevels();
     }, [loggedUser]);
 
-    useEffect(()=>{
+    useEffect(() => {
         let actualXP = (loggedUser.level.experience);
         setPercentage((actualXP % 100) / 100)
     })
+
+
+
+    function canClaimReward() {
+        if (loggedUser && typeof loggedUser.lastDate !== 'undefined') {
+            const lastClaimedTime = new Date(loggedUser.lastDate).getTime();
+            const currentTime = new Date().getTime();
+            const timeDiffInMs = currentTime - lastClaimedTime;
+            const timeDiffInHours = timeDiffInMs / (1000 * 60 * 60);
+            if (timeDiffInHours >= 24) {
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
+
+    async function handleClick() {
+
+        if (canClaimReward()) {
+            let token = await AsyncStorage.getItem('token');
+            let new_coins = loggedUser.coins + 10;
+            let today = new Date()
+           
+            setLoggedUser((prevState) => {
+                return {
+                    ...prevState,
+                    coins: new_coins,
+                    lastDate: today
+                }
+            })
+
+            await axios.put(`https://koinkapi.onrender.com/users/${loggedUser._id}`, {
+                coins: new_coins,
+                lastDate: today
+            }, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+        }
+
+
+
+    };
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            if (loggedUser && typeof loggedUser.lastDate !== 'undefined') {
+                const lastClaimedTime = new Date(loggedUser.lastDate).getTime();
+                const currentTime = new Date().getTime();
+                const timeDiffInMs = currentTime - lastClaimedTime;
+                const timeDiffInHours = timeDiffInMs / (1000 * 60 * 60);
+                if (timeDiffInHours >= 24) {
+                    setIsRewardClaimed(false);
+
+                } else {
+
+                    setIsRewardClaimed(true);
+                }
+            }
+        }, 1000); 
+
+        return () => clearInterval(intervalId);
+    }, [isRewardClaimed, loggedUser]);
+
+
 
     return (
         <View style={styles.container}>
@@ -61,12 +135,20 @@ const Main = ({ navigation }) => {
                     <View style={styles.containerInfo}>
                         <Pressable onPress={() => navigation.navigate('Onboarding1')}>
                             <Icon name="information-outline" size={40} color="#FFFFFF" style={[styles.icon]}></Icon>
-                        </Pressable>    
+                        </Pressable>
                     </View>
+
                     <View style={styles.containerAsteroid}>
+                        <View style={styles.drone}>
+                            {isRewardClaimed == false && (
+                                <View><SvgUri uri="https://rapedolo.sirv.com/koink/Drone.svg" onPress={handleClick} />
+                                </View>
+                            )}
+                        </View>
                         <SvgUri style={styles.koink} uri="https://rapedolo.sirv.com/koink/koinkAcenar%202.svg" />
                         <SvgUri style={styles.asteroid} width='100%' uri="https://rapedolo.sirv.com/koink/asteroid2.svg" />
                     </View>
+
                     <View style={styles.tabbar}>
                         <Pressable onPress={() => navigation.navigate('Minijogos')} style={styles.tabbar.minijogos}>
                             <SvgUri uri="https://sonaligl.sirv.com/Images/Tabbar/minijogos.svg" />
@@ -115,9 +197,15 @@ const styles = StyleSheet.create({
         //backgroundColor: 'black'
     },
     koink: {
-        top:40
+        top: 40
     },
-    asteroid:{
+    asteroid: {
+    },
+
+    drone: {
+        position: 'absolute',
+        top: 0,
+        left: 50
     },
 
     vidas: {
@@ -127,7 +215,7 @@ const styles = StyleSheet.create({
     vidaActive: {
         color: '#ff6600'
     },
-    containerInfo:{
+    containerInfo: {
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'flex-end',
@@ -139,7 +227,7 @@ const styles = StyleSheet.create({
     barView: {
         position: 'absolute',
         width: '80%',
-        marginHorizontal:35
+        marginHorizontal: 35
     },
     levelBar: {
         marginTop: 40,
