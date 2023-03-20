@@ -13,7 +13,7 @@ import { BlurView } from 'expo-blur';
 import { color } from '@rneui/base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {LoggedUserContext} from '../src/LoggedUserContext';
-let bcrypt = require('bcryptjs');
+
 const ListTab = [
     {
         status: 'Inventário'
@@ -101,6 +101,7 @@ const Perfil = ({ navigation, route }) => {
     async function handleLogout() {
         try {
             await AsyncStorage.removeItem('token');
+            await AsyncStorage.removeItem('userId');
             //await AsyncStorage.removeItem('loggedUser');
             setModalLogout(false);
             setModalLogoutDone(true);
