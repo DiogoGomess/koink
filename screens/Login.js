@@ -22,11 +22,14 @@ const Login = ({ navigation, route }) => {
                 username: username.toLowerCase(),
                 password: password
             });
-            console.log(response);
+            // console.log(response);
             setIsLoading(false)
             if (response.data.success) {
                 await AsyncStorage.setItem('token', response.data.accessToken);
+                await AsyncStorage.setItem('loggedIn', JSON.stringify(true));
+                await AsyncStorage.setItem('userId', JSON.stringify(response.data.user._id));
                 setLoggedUser(response.data.user);
+                // console.log(response.data.user);
                 navigation.navigate('Main');
             } else {
                 throw new Error(response.data.msg);
