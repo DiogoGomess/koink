@@ -1,4 +1,9 @@
 {
   "name": "ex1",
-  "displayName": "ex1"
+  "displayName": "ex1",
+  "expo":{
+    "name": "koink",
+    "slug": "koink",
+    "scheme": "koink "
+  }
 }

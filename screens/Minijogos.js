@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
             borderRadius:20,
             backgroundColor:'#FFFFFF',
             text:{
+                fontFamily:"Mulish-Regular",
                 color:'#353535',
                 fontSize:18
             },
@@ -125,10 +126,10 @@ const styles = StyleSheet.create({
             borderTopLeftRadius: 30,
             borderBottomRightRadius: 30,
             text:{
+                fontFamily:"Ubuntu-Bold",
                 alignSelf:'center',
                 color:'#FFFFFF',
                 fontSize:16,
-                fontWeight:'bold',
             }
         },
         image:{
@@ -136,13 +137,14 @@ const styles = StyleSheet.create({
             marginTop:25
         },
         title:{
+            fontFamily:"Ubuntu-Bold",
             marginTop:20,
             alignSelf:'center',
             fontSize:22,
-            fontWeight:'bold',
             color:'#353535',
         },
         text:{
+            fontFamily:"Mulish-Regular",
             width:280,
             marginTop:25,
             alignSelf:'center',
@@ -160,6 +162,7 @@ const styles = StyleSheet.create({
             borderRadius:10,
             backgroundColor:'#FF6600',
             text:{
+                fontFamily:"Mulish-Regular",
                 alignSelf:'center',
                 fontSize:18,
                 color:'#FFFFFF'

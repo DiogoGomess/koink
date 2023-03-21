@@ -247,6 +247,7 @@ const styles = StyleSheet.create({
             borderColor: '#FFFFFF',
             backgroundColor: '#FF6600',
             text: {
+                fontFamily:"Mulish-Regular",
                 alignSelf: 'center',
                 fontFamily: 'Mulish',
                 fontWeight: 'bold',
@@ -256,6 +257,7 @@ const styles = StyleSheet.create({
         },
         bar: {
             // width: Dimensions.get('window').width - 100,
+
             maxWidth: '100%',
             height: 30,
             alignSelf: 'center',
@@ -277,6 +279,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: '#FFFFFF',
         text: {
+            fontFamily:"Mulish-Regular",
             color: '#353535',
             fontSize: 18
         },
@@ -319,6 +322,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         color: 'black',
         fontSize: 18,
+        fontFamily:"Mulish-Regular",
     },
 
 

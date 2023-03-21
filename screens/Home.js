@@ -1,11 +1,29 @@
 import React, { useState } from 'react';
-import { ImageBackground, Text, ScrollView, View, StyleSheet, Image, Pressable, Button, TouchableNativeFeedback, TextInput } from 'react-native';
+import { Alert,ImageBackground, Text, ScrollView, View, StyleSheet, Image, Pressable, Button, TouchableNativeFeedback, TextInput } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import * as AuthSession from 'expo-auth-session';
 
 
 
 const Home = ({ navigation }) => {
+    
+    async function handleGoogleSignIn(){
+        try {
+            const CLIENT_ID = "640845541886-b86rbd2ge51nprepj4ce2r6orj2c6hlp.apps.googleusercontent.com";
+            const REDIRECT_URI = "https://auth.expo.io/@diogogomess/koink";
+            const SCOPE = encodeURI("profile email");
+            const RESPONSE_TYPE = "token";
+
+            const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
+
+            const {type, params} =await AuthSession.startAsync({ authUrl });
+            console.log(type, params);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground resizeMode="cover" style={styles.background} source={require('../assets/loginBack.png')} />
@@ -15,7 +33,7 @@ const Home = ({ navigation }) => {
                 <SvgUri style={styles.logos.leitao} uri="https://sonaligl.sirv.com/Images/KoinkLogin1.svg" />
             </View>
             <View style={styles.social}>
-                <Pressable style={styles.socialButton}>
+                <Pressable style={styles.socialButton} onPress={handleGoogleSignIn}>
                     <SvgUri style={styles.icon} uri="https://sonaligl.sirv.com/Images/google.svg" />
                     <Text style={styles.socialButtonTxt}>Continuar com o Google</Text>
                 </Pressable>
@@ -27,6 +45,7 @@ const Home = ({ navigation }) => {
                     <SvgUri  style={styles.icon} uri="https://sonaligl.sirv.com/Images/apple.svg" />
                     <Text style={[styles.socialButtonTxt, {color:"#ffffff"}]}>Continuar com o Apple ID</Text>
                 </Pressable>
+
             </View>
 
             {/* <View style={styles.social}>
@@ -93,6 +112,7 @@ const styles = StyleSheet.create({
     },
 
     socialButtonTxt:{
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize:18,
         width:'80%'
@@ -162,7 +182,8 @@ const styles = StyleSheet.create({
             text: {
                 alignSelf: 'center',
                 fontSize: 17,
-                color: '#FFFFFF'
+                color: '#FFFFFF',
+                fontFamily:"Mulish-Regular",
             }
         },
         buttonRegistar: {
@@ -175,7 +196,8 @@ const styles = StyleSheet.create({
             text: {
                 alignSelf: 'center',
                 fontSize: 17,
-                color: '#353535'
+                color: '#353535',
+                fontFamily:"Mulish-Regular",
             }
         },
     },

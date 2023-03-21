@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
         elevation: 6,
     },
     numMoedas: {
+        fontFamily:"Mulish-Regular",
         marginLeft: 10,
         color: 'black',
         fontSize: 18,
@@ -101,6 +102,7 @@ const styles = StyleSheet.create({
             backgroundColor: '#FFFFFF',
             borderRadius: 20,
             text: {
+                fontFamily:"Mulish-Regular",
                 color: '#353535',
                 fontSize: 18
             }
@@ -117,10 +119,10 @@ const styles = StyleSheet.create({
             borderTopRightRadius: 10
         },
         text: {
+            fontFamily:"Ubuntu-Bold",
             alignSelf: 'center',
             paddingTop: 17,
             fontSize: 22,
-            fontWeight: 'bold',
             color: '#353535'
         }
     },
@@ -145,6 +147,7 @@ const styles = StyleSheet.create({
         marginVertical:8
     },
     missaoTxt:{
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize:17,
         width: '50%',
@@ -160,6 +163,7 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     completeButtonTxt:{
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize:17
     }

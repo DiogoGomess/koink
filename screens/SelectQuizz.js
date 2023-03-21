@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5
     },
     perguntaTxt: {
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize: 18,
         textAlign: 'center',
@@ -124,6 +125,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     buttonTxt:{
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize: 18,
     }

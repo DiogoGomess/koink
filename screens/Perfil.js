@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { ImageBackground, Text, ScrollView, Modal, Switch, View, StyleSheet, Image, Pressable, Button, TouchableNativeFeedback, TextInput, Dimensions } from 'react-native';
+import {Alert, ImageBackground, Text, ScrollView, Modal, Switch, View, StyleSheet, Image, Pressable, Button, TouchableNativeFeedback, TextInput, Dimensions } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -229,42 +229,6 @@ const Perfil = ({ navigation, route }) => {
                                                     })
                                                 }
                                             </View>
-                                            {/* <View style={styles.avatares}>
-
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                            </View>
-                                            <View style={styles.avatares}>
-
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                            </View>
-                                            <View style={styles.avatares}>
-
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                            </View> */}
                                         </ScrollView>
                                         <ScrollView style={styles.containerAvatares}>
                                             <View style={styles.avatares}>
@@ -279,34 +243,7 @@ const Perfil = ({ navigation, route }) => {
                                                     })
                                                 }
                                             </View>
-                                        </ScrollView>    
-{/* 
-                                        <ScrollView style={styles.containerBoosters}>
-                                            <View style={styles.boosters}>
-
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                            </View>
-                                            <View style={styles.boosters}>
-
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                                <View style={styles.avataresImage}>
-                                                    <SvgUri width='80' height='80' uri="https://rapedolo.sirv.com/koink/KoinkIntelectual.svg" />
-                                                </View>
-                                            </View>
-                                        </ScrollView> */}
+                                        </ScrollView>
                                     </Swiper>
 
 
@@ -551,7 +488,7 @@ const styles = StyleSheet.create({
     navbarText: {
         color: '#ffffff',
         fontSize: 24,
-        fontWeight: 'bold',
+        fontFamily:"Ubuntu-Bold",
         opacity: 1,
     },
     perfilImage: {
@@ -586,6 +523,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     nome: {
+        fontFamily:"Mulish-Regular",
         color: 'white',
         fontSize: 20,
     },
@@ -610,14 +548,14 @@ const styles = StyleSheet.create({
         // marginRight: 15
     },
     nivel: {
+        fontFamily:"Ubuntu-Bold",
         color: 'white',
-        fontWeight: 'bold',
         fontSize: 15,
 
     },
     numero: {
         color: 'white',
-        fontWeight: 'semibold',
+        fontFamily:"Mulish-Regular",
         fontSize: 22
     },
     border: {
@@ -635,6 +573,7 @@ const styles = StyleSheet.create({
         padding: 14
     },
     btnText: {
+        fontFamily:"Mulish-Regular",
         color: 'white',
         fontSize: 18,
         alignSelf: 'center',
@@ -667,6 +606,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     sliderTxt: {
+        fontFamily:"Mulish-Regular",
         alignSelf: 'center',
         paddingHorizontal: 5,
         fontSize: 18,
@@ -678,6 +618,7 @@ const styles = StyleSheet.create({
         color: "#6B6BA3"
     },
     sliderTxtBorder: {
+        fontFamily:"Mulish-Regular",
         borderRightWidth: 1,
         borderColor: "#6B6BA3",
     },
@@ -719,6 +660,7 @@ const styles = StyleSheet.create({
 
 
     inputTxt: {
+        fontFamily:"Mulish-Regular",
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -732,6 +674,7 @@ const styles = StyleSheet.create({
 
     },
     inputTxt1: {
+        fontFamily:"Mulish-Regular",
         marginTop: 30,
     },
 
@@ -751,7 +694,7 @@ const styles = StyleSheet.create({
         paddingVertical: 14
     },
     editarTxt: {
-
+        fontFamily:"Mulish-Regular",
         color: '#FFFFFF',
     },
 
@@ -774,7 +717,7 @@ const styles = StyleSheet.create({
 
     modalTitulo: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontFamily:"Ubuntu-Bold",
         color: '#353535',
         marginTop: 8
     },
@@ -789,6 +732,7 @@ const styles = StyleSheet.create({
     },
 
     somTxt: {
+        fontFamily:"Mulish-Regular",
         fontSize: 18,
         fontWeight: 'semibold',
         color: '#353535'
@@ -812,11 +756,13 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     botaoCancelarTxt: {
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize: 18
     },
 
     modalAvatarTxt: {
+        fontFamily:"Mulish-Regular",
         marginHorizontal: 10,
         fontSize: 18,
         color: '#353535'
@@ -832,6 +778,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     buttonAvatarModalTxt: {
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize: 18
     },

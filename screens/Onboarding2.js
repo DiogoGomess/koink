@@ -48,12 +48,14 @@ const styles = StyleSheet.create({
             //marginTop:90
         },
         title:{
+            fontFamily:"Ubuntu-Regular",
             alignSelf:'center',
             fontSize:30,
             color:'#FF6600',
             marginTop:50
         },
         desc:{
+            fontFamily:"Mulish-Regular",
             width:300,
             alignSelf:'center',
             textAlign:'center',
@@ -70,6 +72,7 @@ const styles = StyleSheet.create({
             borderRadius:10,
             backgroundColor:'#FF6600',
             text:{
+                fontFamily:"Mulish-Regular",
                 alignSelf:'center',
                 fontSize:18,
                 color:'#FFFFFF',
@@ -80,6 +83,7 @@ const styles = StyleSheet.create({
             justifyContent:'center',
             marginTop:20,
             text:{
+                fontFamily:"Mulish-Regular",
                 alignSelf:'center',
                 fontSize:16,
                 color:'#A6A6A6',

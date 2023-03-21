@@ -46,7 +46,7 @@ const Register = ({ navigation }) => {
                     <Pressable onPress={() => handleSubmit()} style={styles.account.buttonRegistar}>
                         <Text style={styles.account.buttonRegistar.text}>Registar</Text>
                     </Pressable>
-                    <Text style={styles.account.text}>Já tens uma conta?</Text>
+                    <Text style={[styles.account.text, {fontFamily:"Mulish-Regular"}]}>Já tens uma conta?</Text>
                     <Pressable onPress={() => navigation.navigate('Login')} style={styles.account.buttonLogin}>
                         <Text style={styles.account.buttonLogin.text}>Login</Text>
                     </Pressable>
@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
     inputs: {
         alignItems: 'center',
         name: {
+            fontFamily:"Mulish-Regular",
             color: 'black',
             width: 284,
             height: 52,
@@ -176,6 +177,7 @@ const styles = StyleSheet.create({
             borderRadius: 10
         },
         email: {
+            fontFamily:"Mulish-Regular",
             color: 'black',
             marginTop: 10,
             width: 284,
@@ -185,6 +187,7 @@ const styles = StyleSheet.create({
             borderRadius: 10
         },
         pass: {
+            fontFamily:"Mulish-Regular",
             color: 'black',
             marginTop: 10,
             width: 284,
@@ -206,7 +209,8 @@ const styles = StyleSheet.create({
             text: {
                 alignSelf: 'center',
                 fontSize: 17,
-                color: '#FFFFFF'
+                color: '#FFFFFF',
+                fontFamily:"Mulish-Regular",
             }
         },
         buttonLogin: {
@@ -217,6 +221,7 @@ const styles = StyleSheet.create({
             backgroundColor: '#EBEBEB',
             borderRadius: 10,
             text: {
+                fontFamily:"Mulish-Regular",
                 alignSelf: 'center',
                 fontSize: 17,
                 color: '#353535'
@@ -255,11 +260,13 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     buttonAvatarModalTxt: {
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize: 18
     },
 
     modalAvatarTxt: {
+        fontFamily:"Mulish-Regular",
         marginHorizontal: 10,
         fontSize: 18,
         color: '#353535'

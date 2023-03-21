@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
     inputs: {
         alignItems: 'center',
         name: {
+            fontFamily:"Mulish-Regular",
             color: 'black',
             width: 284,
             height: 52,
@@ -149,6 +150,7 @@ const styles = StyleSheet.create({
             borderRadius: 10
         },
         pass: {
+            fontFamily:"Mulish-Regular",
             color: 'black',
             marginTop: 10,
             width: 284,
@@ -168,6 +170,7 @@ const styles = StyleSheet.create({
             backgroundColor: '#FF1D25',
             borderRadius: 10,
             text: {
+                fontFamily:"Mulish-Regular",
                 alignSelf: 'center',
                 fontSize: 17,
                 color: '#FFFFFF'
@@ -181,6 +184,7 @@ const styles = StyleSheet.create({
             backgroundColor: '#EBEBEB',
             borderRadius: 10,
             text: {
+                fontFamily:"Mulish-Regular",
                 alignSelf: 'center',
                 fontSize: 17,
                 color: '#353535'
@@ -214,11 +218,13 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     buttonAvatarModalTxt: {
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize: 18
     },
 
     modalAvatarTxt: {
+        fontFamily:"Mulish-Regular",
         marginHorizontal: 10,
         fontSize: 18,
         color: '#353535'

@@ -386,6 +386,7 @@ const styles = StyleSheet.create({
         elevation: 6,
     },
     numMoedas: {
+        fontFamily:"Mulish-Regular",
         marginLeft: 10,
         color: 'black',
         fontSize: 18,
@@ -398,6 +399,7 @@ const styles = StyleSheet.create({
     },
 
     titleTxt: {
+        fontFamily:"Ubuntu-Medium",
         backgroundColor: '#ffffff',
         color: '#353535',
         paddingHorizontal: 70,
@@ -416,6 +418,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
     },
     btnText: {
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize: 18,
         alignSelf: 'center',
@@ -426,6 +429,7 @@ const styles = StyleSheet.create({
         // borderTopLeftRadius: 5,
     },
     btnTextActive: {
+        fontFamily:"Mulish-Regular",
         color: '#FFFFFF',
     },
 
@@ -467,6 +471,7 @@ const styles = StyleSheet.create({
     },
 
     avatarPrecoTxt: {
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize: 18
     },
@@ -479,6 +484,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
     },
     botaoComprarTxt: {
+        fontFamily:"Mulish-Regular",
         color: '#ffffff',
         fontSize: 18,
     },
@@ -513,6 +519,7 @@ const styles = StyleSheet.create({
     },
 
     avatarCompraInfo: {
+        fontFamily:"Mulish-Regular",
         alignItems: 'center',
     },
     avataresCompraImage: {
@@ -535,6 +542,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     avatarCompraPrecoTxt: {
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize: 18
     },
@@ -549,6 +557,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     botaoCompraFinalTxt: {
+        fontFamily:"Mulish-Regular",
         color: '#ffffff',
         fontSize: 18
     },
@@ -563,6 +572,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     botaoCancelarTxt: {
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize: 18
     },
@@ -577,11 +587,13 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     buttonAvatarModalTxt: {
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         fontSize: 18
     },
 
     modalAvatarTxt: {
+        fontFamily:"Mulish-Regular",
         marginHorizontal: 10,
         fontSize: 18,
         color: '#353535'

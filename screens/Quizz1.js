@@ -283,11 +283,11 @@ export default function Quizz1({ navigation }) {
                                 <View style={styles.containerIcons}>
                                     <View style={{ alignItems: 'center' }}>
                                         <IconAntDesign name="closesquareo" size={80} color="#ff6600" style={styles.icon} onPress={() => setModalPause(false)}></IconAntDesign>
-                                        <Text style={{ color: '#353535' }}>Voltar</Text>
+                                        <Text style={{ color: '#353535',fontFamily:"Mulish-Regular", }}>Voltar</Text>
                                     </View>
                                     <View style={{ alignItems: 'center' }}>
                                         <IconMaterial name="exit-to-app" size={80} color="#ff6600" style={styles.icon} onPress={() => navigation.navigate('Minijogos')}></IconMaterial>
-                                        <Text style={{ color: '#353535' }}>Sair do Jogo</Text>
+                                        <Text style={{ color: '#353535', fontFamily:"Mulish-Regular", }}>Sair do Jogo</Text>
                                     </View>
                                 </View>
                             </View>
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
     pontuacaoTxt: {
         color: '#f6f4f2',
         fontSize: 22,
-        fontWeight: 'bold'
+        fontFamily:"Ubuntu-Bold",
 
     },
     imageQuizz: {
@@ -346,12 +346,14 @@ const styles = StyleSheet.create({
         color: '#353535',
         fontSize: 18,
         textAlign: 'center',
+        fontFamily:"Mulish-Regular",
     },
     numPerguntasContainer: {
         alignItems: 'center',
         marginTop: 70
     },
     numPerguntasTxt: {
+        fontFamily:"Mulish-Regular",
         color: '#F6F4f2',
         fontSize: 18
     },
@@ -367,6 +369,7 @@ const styles = StyleSheet.create({
             backgroundColor: '#FFFFFF',
             borderRadius: 10,
             text: {
+                fontFamily:"Mulish-Regular",
                 width: '95%',
                 textAlign: 'center',
                 alignSelf: 'center',
@@ -385,6 +388,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         text: {
             //textAlign: 'center',
+            fontFamily:"Mulish-Regular",
             alignSelf: 'center',
             color: '#FFFFFF',
             fontSize: 16
@@ -406,19 +410,19 @@ const styles = StyleSheet.create({
     },
     modalTitulo: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontFamily:"Ubuntu-Bold",
         color: '#353535',
         marginTop: 25
     },
     modalSubTitulo: {
         fontSize: 16,
-        fontWeight: 'light',
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         marginTop: 8
     },
     modalCoins: {
         fontSize: 17,
-        fontWeight: 'light',
+        fontFamily:"Mulish-Regular",
         color: '#353535',
         marginTop: 30
     },
@@ -430,6 +434,7 @@ const styles = StyleSheet.create({
         height: 41,
         borderRadius: 10,
         text: {
+            fontFamily:"Mulish-Regular",
             alignSelf: 'center',
             color: '#ffffff',
             fontSize: 17
@@ -443,6 +448,7 @@ const styles = StyleSheet.create({
         height: 41,
         borderRadius: 10,
         text: {
+            fontFamily:"Mulish-Regular",
             alignSelf: 'center',
             color: '#353535',
             fontSize: 17
@@ -450,8 +456,8 @@ const styles = StyleSheet.create({
     },
 
     modalPauseTxt: {
+        fontFamily:"Ubuntu-Bold",
         fontSize: 22,
-        fontWeight: 'bold',
         color: '#353535',
         marginTop: 20
     },
